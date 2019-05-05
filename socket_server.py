@@ -1,3 +1,4 @@
+import os
 from json import dumps, loads
 
 from tornado.ioloop import IOLoop
@@ -24,7 +25,7 @@ class ManualSocketHandler(WebSocketHandler):
         grid = message['grid']['cells']
         score = message['score']
         tiles = [[cell['value'] if cell else 0 for cell in row] for row in zip(*grid)]
-        estimation = estimate_directions_win_probabilities(tiles, number_of_games=min(int(score / 20) + 1, 250))
+        estimation = estimate_directions_win_probabilities(tiles, number_of_games=min(int(score / 20) + 1, 200))
         super().write_message(dumps({
             'values': estimation,
             'go to': max(estimation, key=estimation.get)
@@ -72,8 +73,9 @@ if __name__ == '__main__':
     ])
 
     address = '0.0.0.0'
-    # address = '192.168.99.100'
-    port = 8888
+    # address = '192.168.99.100'  # for docker toolbox
+    port = 8888  # port for localhost
+    # port = os.environ['PORT']  # heroku port (use for deploying)
     app.listen(port=port, address=address)
 
     print('App inited on {}:{}'.format(address, port))

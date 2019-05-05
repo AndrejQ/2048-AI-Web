@@ -1,5 +1,6 @@
-//var ws = new WebSocket("ws://localhost:8888/websocket");
-var ws = new WebSocket("ws://192.168.99.100:8888/websocket");
+var ws = new WebSocket("ws://localhost:8888/websocket");
+//var ws = new WebSocket("ws://192.168.99.100:8888/websocket");  // for docker toolbox
+//var ws = new WebSocket("wss://infinite-reaches-38760.herokuapp.com/websocket");  // for deploy
 
 function GameManager(size, InputManager, Actuator, StorageManager) {
 	this.size           = size; // Size of the grid
@@ -17,6 +18,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
     console.log("setting up socket connection")
      ws.onopen = function() {
         console.log('socket opened');
+        ws.send(JSON.stringify(self.serialize()));
      };
 
      ws.onmessage = function (evt) {
