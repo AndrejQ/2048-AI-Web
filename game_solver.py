@@ -109,13 +109,6 @@ def move_in_line(line, move_right=False):
     return line
 
 
-def prnt(tiles):
-    if not tiles:
-        return print("NONO")
-    for row in tiles:
-        print(row)
-
-
 if __name__ == '__main__':
     print('start script', __name__)
     test_tiles = [

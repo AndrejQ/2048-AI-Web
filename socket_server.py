@@ -24,7 +24,7 @@ class ManualSocketHandler(WebSocketHandler):
         grid = message['grid']['cells']
         score = message['score']
         tiles = [[cell['value'] if cell else 0 for cell in row] for row in zip(*grid)]
-        estimation = estimate_directions_win_probabilities(tiles, number_of_games=min(int(score / 20) + 1, 300))
+        estimation = estimate_directions_win_probabilities(tiles, number_of_games=min(int(score / 20) + 1, 250))
         super().write_message(dumps({
             'values': estimation,
             'go to': max(estimation, key=estimation.get)
@@ -71,7 +71,8 @@ if __name__ == '__main__':
         (r'/(.*).woff', FontHandler)
     ])
 
-    address = 'localhost'
+    address = '0.0.0.0'
+    # address = '192.168.99.100'
     port = 8888
     app.listen(port=port, address=address)
 

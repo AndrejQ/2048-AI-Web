@@ -1,4 +1,5 @@
-var ws = new WebSocket("ws://localhost:8888/websocket");
+//var ws = new WebSocket("ws://localhost:8888/websocket");
+var ws = new WebSocket("ws://192.168.99.100:8888/websocket");
 
 function GameManager(size, InputManager, Actuator, StorageManager) {
 	this.size           = size; // Size of the grid
@@ -20,7 +21,6 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
 
      ws.onmessage = function (evt) {
         let data = JSON.parse(evt.data);
-        console.log(data)
         let map = {
             up: 0, // Up
             right: 1, // Right
