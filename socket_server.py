@@ -37,30 +37,30 @@ class ManualSocketHandler(WebSocketHandler):
 
 class TestHandler(RequestHandler):
     def get(self, *args, **kwargs):
-        self.render("game_frontend/index.html")
+        self.render("resources/index.html")
 
 
 class JsHandler(RequestHandler):
     def get(self, *args, **kwargs):
         print("get:", self.request.uri)
         self.set_header("Content-Type", 'text/css; charset="utf-8"')
-        self.render("game_frontend" + self.request.uri)
+        self.render("resources" + self.request.uri)
 
 
 class CssHandler(RequestHandler):
     def get(self, *args, **kwargs):
         print("get:", self.request.uri)
         self.set_header("Content-Type", 'text/css; charset="utf-8"')
-        self.render("game_frontend" + self.request.uri)
+        self.render("resources" + self.request.uri)
 
 
 class FontHandler(RequestHandler):
     def get(self, *args, **kwargs):
         print("get:", self.request.uri)
-        # need to fix this
-        self.set_header("Content-Type", 'font/woff; charset="utf-8"')
-        self.write("game_frontend" + self.request.uri)
-        # self.finish()
+        with open("resources" + self.request.uri, 'rb') as f:
+            data = f.read()
+            self.write(data)
+        self.finish()
 
 
 if __name__ == '__main__':
